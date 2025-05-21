@@ -1,0 +1,11 @@
+{
+    "test_env_kwargs": {
+        "horizon": 1000,
+        "render_mode": null
+    },
+    "test_test_seed": 47,
+    "test_episodes": 1000,
+    "dir": "results/ea/neat/",
+    "run": 3,
+    "ep": 90
+}

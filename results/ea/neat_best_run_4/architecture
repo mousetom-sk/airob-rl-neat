@@ -1,0 +1,34 @@
+digraph {
+	node [fontsize=9 height=0.5 ordering=in shape=circle width=0.5]
+	{
+		rank=source
+		edge [style=invis]
+		"actuator x" [fillcolor=lightgray shape=box style=filled]
+		"actuator y" [fillcolor=lightgray shape=box style=filled]
+		"chip x (relative)" [fillcolor=lightgray shape=box style=filled]
+		"chip y (relative)" [fillcolor=lightgray shape=box style=filled]
+		"goal x (relative)" [fillcolor=lightgray shape=box style=filled]
+		"goal y (relative)" [fillcolor=lightgray shape=box style=filled]
+		"actuator x" -> "actuator y"
+		"actuator y" -> "chip x (relative)"
+		"chip x (relative)" -> "chip y (relative)"
+		"chip y (relative)" -> "goal x (relative)"
+		"goal x (relative)" -> "goal y (relative)"
+	}
+	{
+		rank=sink
+		edge [style=invis]
+		dx [fillcolor=lightblue style=filled]
+		dy [fillcolor=lightblue style=filled]
+		dx -> dy
+	}
+	"chip x (relative)" -> dx [color=green penwidth=0.7487361447350678 style=solid]
+	"chip x (relative)" -> dy [color=red penwidth=0.8740946619250792 style=solid]
+	"chip y (relative)" -> dx [color=green penwidth=1.1296302300654428 style=solid]
+	"chip y (relative)" -> dy [color=green penwidth=0.32192640033116465 style=solid]
+	"goal x (relative)" -> dx [color=green penwidth=0.15999888368977294 style=solid]
+	"goal y (relative)" -> dy [color=green penwidth=0.1503752368936444 style=solid]
+	3194 -> dx [color=red penwidth=0.5096039525961562 style=solid]
+	"actuator y" -> 3194 [color=green penwidth=0.35030173084836935 style=solid]
+	3194 [label="" fillcolor=white style=filled]
+}

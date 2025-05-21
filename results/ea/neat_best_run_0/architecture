@@ -1,0 +1,42 @@
+digraph {
+	node [fontsize=9 height=0.5 ordering=in shape=circle width=0.5]
+	{
+		rank=source
+		edge [style=invis]
+		"actuator x" [fillcolor=lightgray shape=box style=filled]
+		"actuator y" [fillcolor=lightgray shape=box style=filled]
+		"chip x (relative)" [fillcolor=lightgray shape=box style=filled]
+		"chip y (relative)" [fillcolor=lightgray shape=box style=filled]
+		"goal x (relative)" [fillcolor=lightgray shape=box style=filled]
+		"goal y (relative)" [fillcolor=lightgray shape=box style=filled]
+		"actuator x" -> "actuator y"
+		"actuator y" -> "chip x (relative)"
+		"chip x (relative)" -> "chip y (relative)"
+		"chip y (relative)" -> "goal x (relative)"
+		"goal x (relative)" -> "goal y (relative)"
+	}
+	{
+		rank=sink
+		edge [style=invis]
+		dx [fillcolor=lightblue style=filled]
+		dy [fillcolor=lightblue style=filled]
+		dx -> dy
+	}
+	"chip x (relative)" -> dx [color=green penwidth=0.38412464959275483 style=solid]
+	"chip x (relative)" -> dy [color=green penwidth=1.0588713558036618 style=solid]
+	"chip y (relative)" -> dx [color=red penwidth=1.183862656190653 style=solid]
+	"chip y (relative)" -> dy [color=green penwidth=0.6544393951400436 style=solid]
+	"goal y (relative)" -> dy [color=green penwidth=0.14814799545673157 style=solid]
+	1035 -> dy [color=green penwidth=0.3459517386651184 style=solid]
+	"goal x (relative)" -> dx [color=green penwidth=0.14316682652116053 style=solid]
+	1754 -> dy [color=green penwidth=0.31391667848623006 style=solid]
+	"chip x (relative)" -> 1035 [color=green penwidth=0.927564840913592 style=solid]
+	497 -> 1754 [color=green penwidth=0.438099646530863 style=solid]
+	"goal x (relative)" -> 497 [color=green penwidth=0.35242820139972486 style=solid]
+	931 -> 497 [color=red penwidth=0.59764103105438 style=solid]
+	"goal x (relative)" -> 931 [color=red penwidth=1.1431451917560405 style=solid]
+	931 [label="" fillcolor=white style=filled]
+	1035 [label="" fillcolor=white style=filled]
+	497 [label="" fillcolor=white style=filled]
+	1754 [label="" fillcolor=white style=filled]
+}
