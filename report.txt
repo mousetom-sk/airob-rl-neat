@@ -15,10 +15,10 @@ their performance.
 We suppose the reader to be familiar with the frameworks of RL and Evolutionary
 Algorithms (EAs). For more details on these topics, please refer to the
 treatises from Sutton and Barto [1] and Eiben and Smith [2], respectively. We
-now briefly describe the two learning techinques we have evaluated.
+now briefly describe the two learning techniques we have evaluated.
 
 
-## Advatage Actor-Critic
+## Advantage Actor-Critic
 
 Consider a discrete-time Markov Decision Process (MDP) M with a state space
 S \in R^n, an action space A \in R^m, and a dynamics function p: S x A -> S x R,
@@ -31,7 +31,7 @@ rely on parametrized representations of the value functions (v_w or q_w) such as
 Artificial Neural Networks (ANNs) because the action space of M is continuous as
 well.
 
-The family of Advatage Actor-Critic (A2C) RL methods [1] thus works both with a
+The family of Advantage Actor-Critic (A2C) RL methods [1] thus works both with a
 parametrized state-value-function approximation v_w (a critic) and a
 parametrized policy \pi_\theta (an actor). The actor always decides the action
 to be chosen, even during training, which requires its policy to be soft, i.e.,
@@ -57,11 +57,11 @@ of SGD (e.g., RMSProp or Adam).
 ## NeuroEvolution of Augmenting Topologies
 
 NeuroEvolution of Augmenting Topologies (NEAT) [3] is a general-purpose EA for
-simultaneously optimizing weigths and topologies of ANNs. It evolves a
+simultaneously optimizing weights and topologies of ANNs. It evolves a
 population of ANNs divided into species based on their structural and weight
 differences. The initial population contains merely networks with no hidden
-neurons and a full wiring from inputs to outputs. Indiviuals with new nodes and
-connections are gradually introduced throughout evolution. More infromation
+neurons and a full wiring from inputs to outputs. Individuals with new nodes and
+connections are gradually introduced throughout evolution. More information
 about the process and the employed genetic operators can be found in [3].
 
 
@@ -70,7 +70,7 @@ about the process and the employed genetic operators can be found in [3].
 We have prepared a Python simulation for our task's environment to train and
 test the agents. In this simplified model, the tabletop is assumed to be
 rectangular and to lie in the x-y plane, with the bottom left corner at (0, 0)
-and the top right at (1000, 700). The state is discribed by a vector of
+and the top right at (1000, 700). The state is described by a vector of
 6 values:
     - the x position of the end effector's tip (the actuator, for short),
     - the y position of the actuator,
@@ -83,7 +83,7 @@ chip's position is given by the circle's center. Each action consists of a pair
 (dx, dy) \in [-1, 1]^2 determining the direction and the magnitude of the
 actuator's step in both axes. This vector is scaled by a factor of
 step_size = 10 before applied. Hence, the agent only tells where the tip of the
-end effecter should be moved, but not how. The step reward r \in R is calculated
+end effector should be moved, but not how. The step reward r \in R is calculated
 via the following procedure:
 
 procedure calculate_reward(p_a, p_c, p_g, p_a_last, p_c_last, p_g_last)
@@ -114,8 +114,8 @@ actuator, the chip, and the goal, \Delta e takes the difference between the
 expression e evaluated for the next and last positions, and <v_1, v_2> is the
 dot product of vectors v_1 and v_2.
 
-To simplify the simulation of chip pushing, we have made several assumptions
-such as that this process is friction free. We do not further cover the details
+To simplify the simulation of chip pushing, we have made several assumptions,
+such as that this process is friction-free. We do not further cover the details
 of our implementation of pushing for brevity.
 
 
@@ -125,13 +125,13 @@ We have conducted all experiments in our RL environment with an episode horizon
 of 1000 steps and \gamma = 0.99. We have implemented the A2C method ourselves
 and used the Python library NEAT-Python [4] to run slightly modified NEAT.
 
-Three different configuration of A2C agents have been examined, all possessing a
-pair of Multi-Layer Perceptrons (MLPs) for the actor and the critic.
+Three different configurations of A2C agents have been examined, all possessing
+a pair of Multi-Layer Perceptrons (MLPs) for the actor and the critic.
 Configuration 1 has been equipped with MLPs having one hidden layer of
 8 neurons, Configuration 2 with MLPs having one hidden layer of 16 neurons,
 Configuration 3 with MLPs having two hidden layers of 8 neurons. The actor's MLP
-has served as a model for outputinng the mean (\mu) for the multivariate normal
-distribution from which the action is sampled. The diagonal convariance matrix
+has served as a model for outputting the mean (\mu) for the multivariate normal
+distribution from which the action is sampled. The diagonal covariance matrix
 has been determined by a separate vector of parameters \sigma. All parameters
 have been optimized with RMSProp at the learning rate of 0.0001. To accelerate
 learning, the observed states have always been normalized to zero empirical mean
@@ -142,7 +142,7 @@ last state of the agents on 1000 episodes. We have run each configuration
 5 times.
 
 NEAT has been configured to evolve a population of 150 individuals for 300
-generations (epochs), starting from fully conected networks with no hiddent
+generations (epochs), starting from fully connected networks with no hidden
 neurons. We have also employed NEAT-Python's structural mutations that remove
 connections and nodes. The exact setting of all hyper-parameters can be found in
 the configuration file provided in Appendix, which we have borrowed from the
@@ -182,10 +182,10 @@ has been a major problem for the other A2C configurations is also indicated in
 Figures 1 and 2, which depict the 10-epoch moving mean +/- standard deviation
 for the return and the distance in the evaluation episodes during training,
 respectively. These figures even show that the last A2C agents have been roughly
-the most successful for Configuration 1 and 2. On the contrary, Configuration 3
-has been experience several performance peaks throughout the training. Lastly,
+the most successful for Configurations 1 and 2. On the contrary, Configuration 3
+has been experiencing several performance peaks throughout the training. Lastly,
 all configurations have been learning fairly quickly, with very minor
-improvements occuring after around 60 epochs.
+improvements occurring after around 60 epochs.
 
                          [See figures/rl/return.pdf.]
 
@@ -197,13 +197,13 @@ improvements occuring after around 60 epochs.
 
 The distance information in Table 1 implies that the final NEAT agents have
 reached a mediocre level of proficiency compared to A2C in Configuration 1.
-However, they have been able to collect surprisingly more rewards throught an
-episode, which we can see on the higher returns in Table 1. We may thus conclude
+However, they have been able to collect surprisingly more rewards through an
+episode, which we can see in the higher returns in Table 1. We may thus conclude
 that the solutions found by NEAT can avoid off-table positions better or keep
 the chip close to the goal for longer, but often not until the end. Unlike A2C
 configurations, NEAT has experienced a peak in the performance after about 140
 epochs/generations, as the learning progressions in Figures 3 and 4 illustrate.
-This trend correlates with NEAT's qualitative regress or stagnation after that
+This trend correlates with NEAT's qualitative regression or stagnation after that
 point, which we have identified by inspecting the experiment logs. Hence, we
 have (despite our previous intention) also tested the individuals with the best
 evaluation fitness among our 10-epoch checkpoints throughout the training. The
@@ -222,7 +222,9 @@ while surpassing it in the collected return.
 
 Interestingly, NEAT has managed to evolve much simpler networks, even with some
 input-output connections missing. Example architectures of the final agents are
-in Figures 5 and 6.
+in Figures 5 and 6, where green and red arrows represent positive and negative
+weighted connections, respectively. The widths of the lines are proportional to
+the weight magnitudes.
 
                  [See results/ea/neat/run_0_architecture.svg.]
 
@@ -232,14 +234,14 @@ in Figures 5 and 6.
 
     Figure 6: The architecture of the final agent from the third run of NEAT.
 
-Our visual assessment of the best agents' preformance on the test episodes has
+Our visual assessment of the best agents' performance on the test episodes has
 revealed that all methods have converged to a solution where the actuator slowly
 pushes the chip to the goal position via circular movements, as exemplified in
-Animation 1. We have not expected such behaviour to be learned, instead, we
-have thought that the actuator would push the chip directly to the goal. We
+Animation 1. We did not expect such behaviour to be learned, instead, we
+thought that the actuator would push the chip directly to the goal. We
 hypothesize that this phenomenon may result from our friction-free, simplified
 simulation of chip pushing. NEAT has constructed networks with simpler
-approaches to the cirular motion due to their lower complexity, as can be seen
+approaches to the circular motion due to their lower complexity, as can be seen
 in Animation 2. Unfortunately, we have noticed that neither A2C nor NEAT agents
 can safely avoid getting off the table. More recordings from test episodes are
 provided in Appendix.
@@ -262,7 +264,7 @@ to discover simpler, but also less effective solutions than A2C. Note that we
 have even tried the purer NEAT algorithm without the possibility to delete
 connections and nodes. However, we have failed to determine the suitable values
 for the other hyper-parameters in that case, leading to inferior results. This
-experience might signalize that the original NEAT would have struggled with
+experience might signal that the original NEAT would have struggled with
 finding a working solution.
 
 
